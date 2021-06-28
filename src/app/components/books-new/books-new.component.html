@@ -1,0 +1,49 @@
+<div class="container" *ngIf="bookFormGroup">
+    <form [formGroup]="bookFormGroup">
+      <div class="form-group">
+        <label>ID</label>
+        <input type="text" class="form-control" formControlName="id">
+      </div>
+      <div class="form-group">
+        <label>Author</label>
+        <input type="text" class="form-control" formControlName="author"
+               [ngClass]="{'is-invalid':submitted && bookFormGroup.controls.author.errors}" />
+        <div *ngIf="submitted && bookFormGroup.controls.author.errors" class="invalid-feedback">
+          <div *ngIf="bookFormGroup.controls.author.errors.required">Author is Required</div>
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label> publishingDate</label>
+        <input type="text" class="form-control" formControlName="publishingDate" [ngClass]="{'is-invalid':submitted && bookFormGroup.controls.publishingDate.errors}" />
+        <div *ngIf="submitted && bookFormGroup.controls.publishingDate.errors" class="invalid-feedback">
+          <div *ngIf="bookFormGroup.controls.publishingDate.errors.required">Author is Required</div>
+        </div>
+        </div>
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" class="form-control" formControlName="title" [ngClass]="{'is-invalid':submitted && bookFormGroup.controls.title.errors}" />
+        <div *ngIf="submitted && bookFormGroup.controls.title.errors" class="invalid-feedback">
+          <div *ngIf="bookFormGroup.controls.title.errors.required">Author is Required</div>
+        </div>
+      </div>
+      <div class="form-group">
+      <label>Price</label>
+      <input type="text" class="form-control" formControlName="price">
+    </div>
+      <div class="form-group">
+        <label>Quantity</label>
+        <input type="text" class="form-control" formControlName="quantity">
+      </div>
+      <div class="form-group">
+        <label>Selected</label>
+        <input type="checkbox" formControlName="selected" class="form-check">
+      </div>
+      <div class="form-group">
+        <label>Available</label>
+        <input type="checkbox" formControlName="available" class="form-check">
+      </div>
+      <button class="btn btn-success" (click)="onSaveBook()">Save</button>
+    </form>
+  </div>

@@ -1,0 +1,85 @@
+
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
+  <ul class="navbar navbar-nav">
+    <li>
+      <button (click)="onGetAllBooks()" class="btn btn-sm btn-outline-info ml-2">All</button>
+    </li>
+
+    <li>
+      <button (click)="onNewBook()"    class="btn btn-sm btn-outline-info ml-2">New</button>
+    </li>
+  </ul>
+  <ul class="navbar navbar-nav ml-auto">
+    <li>
+      <form #f="ngForm" (ngSubmit)="onSearch(f.value)" class="form-inline">
+          <input ngModel name="keyword"  type="text">
+          <button class="btn btn-sm btn-outline-info ml-2">
+            <span class="fa fa-search"></span>
+          </button>
+      </form>
+    </li>
+  </ul>
+</nav>
+<div class="container">
+    <ng-container *ngIf="(books$ |async) as result" [ngSwitch]="result.dataState" >
+      <ng-container *ngSwitchCase="DataStateEnum.LOADING">
+        Chargement en cours ....
+      </ng-container>
+      <ng-container *ngSwitchCase="DataStateEnum.ERROR">
+        <div class="alert-danger">
+          {{result.errorMessage}}
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="DataStateEnum.LOADED">
+        <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>title</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>quantity</th>
+            <th>Date publication</th>
+            <th>available</th>
+            <th>selected</th>
+        </tr>
+        <tr *ngFor="let p of result.data">
+            <td>{{p._id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.author}}</td>
+            <td>{{p.price}}</td>
+            <td>{{p.quantity}}</td>
+            <td>{{p.publishingDate}}</td>
+            <td>{{p.available}}</td>
+            <td>{{p.selected}}</td>
+            <td>
+              <button class="btn btn-sm" (click)="onSelect(p)" [ngClass]="p.selected?'btn-success':'btn-danger'" >
+                <span *ngIf="p.selected">Unselect</span>
+                <span *ngIf="!p.selected">Select</span>
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-danger" >
+                <span class="fa fa-trash-o"></span>
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-danger" (click)="onEdit(p)" >
+                <span class="fa fa-edit"></span>
+              </button>
+            </td>
+     </tr>
+    </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        
+      </ul>
+    </nav>
+</ng-container>
+</ng-container>
+
+</div>
