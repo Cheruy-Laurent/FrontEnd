@@ -11,18 +11,19 @@ import { Book } from 'src/app/model/book.model';
 export class BooksEditComponent implements OnInit {
   bookId:number;
   bookFormGroup?:FormGroup;
-  submitted:boolean=false;
+  submitted:boolean=true;
   constructor(private activatedRoute:ActivatedRoute,
               private bookService:BookService,
               private fb:FormBuilder) {
-    this.bookId=activatedRoute.snapshot.params.id;
+    this.bookId=activatedRoute.snapshot.params._id;
   }
 
+  
   ngOnInit(): void {
     this.bookService.getBook(this.bookId)
       .subscribe(book=>{
         this.bookFormGroup=this.fb.group({
-          id:[book._id,Validators.required],
+          _id:[book._id,Validators.required],
           author:[book.author,Validators.required],
           title:[book.title,Validators.required],
           price:[book.price,Validators.required],
